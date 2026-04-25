@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="background"></div>
+
+<div class="container">
+
+    <h1>🎓 Student Dashboard</h1>
+
+    <!-- FORM -->
+    <div class="glass-card">
+        <h2>➕ Add New Student</h2>
+
+        <form id="studentForm">
+            <input type="text" id="name" placeholder="Full Name" required>
+            <input type="email" id="email" placeholder="Email Address" required>
+            <input type="number" id="age" placeholder="Age" required>
+
+            <button type="submit">Add Student ✨</button>
+        </form>
+
+        <p id="errorMsg"></p>
+    </div>
+
+    <!-- LIST -->
+    <div class="glass-card">
+        <h2>📋 Student Records</h2>
+        <div id="studentList"></div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
