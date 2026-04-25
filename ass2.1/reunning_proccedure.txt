@@ -1,0 +1,87 @@
+🚀 1. Prerequisites (IMPORTANT)
+Before running, make sure you have:
+✅ Install Node.js
+Check:
+node -vnpm -v
+
+✅ Install MongoDB
+Make sure MongoDB is running:
+Option 1 (Local MongoDB)
+Start service:
+mongod
+Option 2 (MongoDB Compass)
+Open Compass → connect:
+mongodb://127.0.0.1:27017
+
+📁 2. Open Project Folder
+Go to your project:
+cd C:\Users\acer\OneDrive\Desktop\fullstack_ass2\student-crud-app
+
+📦 3. Install Dependencies
+Run:
+npm init -y
+npm install express mongoose
+
+📂 4. Check Folder Structure
+Make sure you have:
+student-crud-app/│
+                 ├── server.js
+		 ├── models/
+                 │   └── Student.js
+                 ├── routes/
+                 │   └── studentRoutes.js
+                 ├── public/
+                 │   ├── index.html
+                 │   ├── script.js
+                 │   └── style.css
+
+▶️ 5. Run Backend Server
+Start server:
+node server.js
+✅ MongoDB Connected Successfully
+
+🚀 Server is running successfully!
+👉 Local URL: http://localhost:3000
+📌 Open this link in your browser to view the app
+
+
+🎯 6. Test CRUD Operations
+✔ Add Student
+Enter name, email, age
+Click "Add Student"
+
+✔ View Students
+Automatically loads from MongoDB
+
+✔ Delete Student
+Click Delete button
+
+
+
+⚠️ Common Errors Fix
+❌ “Cannot find module server.js”
+✔ You are in wrong folder
+✔ Fix:
+cd correct-foldernode server.js
+
+❌ “MongoDB not connected”
+✔ Start MongoDB:
+mongod
+
+❌ “Unexpected JSON error”
+✔ You opened HTML directly
+✔ Always use:
+http://localhost:3000
+
+🧠 FINAL FLOW (VERY IMPORTANT)
+MongoDB ON   ↓node server.js   ↓Open http://localhost:3000   ↓Use CRUD App
+
+🚀 If you want next upgrade
+I can help you add:
+🔥 Edit student feature
+🔥 Search bar
+🔥 Pagination
+🔥 Login system
+🔥 Attractive React frontend
+🔥 Deploy online (free link)
+Just tell 👍
