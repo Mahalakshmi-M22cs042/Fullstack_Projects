@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Placement System</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        input {
+            padding: 10px;
+            margin: 5px;
+            width: 150px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .actions button {
+            background: #28a745;
+        }
+
+        .delete {
+            background: red;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🎓 Student Placement System</h1>
+
+<!-- ➕ Add Student -->
+<form id="studentForm">
+    <input type="text" id="name" placeholder="Name" required>
+    <input type="number" id="age" placeholder="Age" required>
+    <input type="text" id="department" placeholder="Department" required>
+    <input type="text" id="company" placeholder="Company">
+    <input type="number" id="salary" placeholder="Salary">
+
+    <label>
+        Placed:
+        <input type="checkbox" id="placed">
+    </label>
+
+    <button type="submit">Add Student</button>
+</form>
+
+<!-- Buttons -->
+<button onclick="getStudents()">📥 Load Students</button>
+<button onclick="getPlaced()">🎯 Placed Students</button>
+
+<!-- Table -->
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Department</th>
+            <th>Placed</th>
+            <th>Company</th>
+            <th>Salary</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="studentTable"></tbody>
+</table>
+
+<script>
+const API = "http://localhost:3000";
+
+// ➕ Add Student
+document.getElementById("studentForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const student = {
+        name: document.getElementById("name").value,
+        age: document.getElementById("age").value,
+        department: document.getElementById("department").value,
+        placed: document.getElementById("placed").checked,
+        company: document.getElementById("company").value,
+        salary: document.getElementById("salary").value
+    };
+
+    try {
+        await fetch(API + "/students", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(student)
+        });
+
+        alert("✅ Student Added!");
+        getStudents();
+    } catch (err) {
+        alert("❌ Error adding student");
+        console.error(err);
+    }
+});
+
+// 📥 Load Students
+async function getStudents() {
+    try {
+        const res = await fetch(API + "/students");
+        const data = await res.json();
+        display(data);
+    } catch (err) {
+        alert("❌ Failed to load students");
+        console.error(err);
+    }
+}
+
+// 🎯 Load Placed Students
+async function getPlaced() {
+    try {
+        const res = await fetch(API + "/placed");
+        const data = await res.json();
+        display(data);
+    } catch (err) {
+        alert("❌ Failed to load placed students");
+        console.error(err);
+    }
+}
+
+// ❌ Delete
+async function deleteStudent(id) {
+    await fetch(API + "/students/" + id, {
+        method: "DELETE"
+    });
+    getStudents();
+}
+
+// ✏️ Update
+async function updateStudent(id) {
+    const name = prompt("Enter new name:");
+    const company = prompt("Enter company:");
+
+    if (!name) return;
+
+    await fetch(API + "/students/" + id, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, company, placed: true })
+    });
+
+    getStudents();
+}
+
+// 📊 Display
+function display(students) {
+    const table = document.getElementById("studentTable");
+    table.innerHTML = "";
+
+    if (students.length === 0) {
+        table.innerHTML = "<tr><td colspan='7'>No data found</td></tr>";
+        return;
+    }
+
+    students.forEach(s => {
+        table.innerHTML += `
+        <tr>
+            <td>${s.name}</td>
+            <td>${s.age}</td>
+            <td>${s.department}</td>
+            <td>${s.placed}</td>
+            <td>${s.company || "-"}</td>
+            <td>${s.salary || "-"}</td>
+            <td class="actions">
+                <button onclick="updateStudent('${s._id}')">Edit</button>
+                <button class="delete" onclick="deleteStudent('${s._id}')">Delete</button>
+            </td>
+        </tr>
+        `;
+    });
+}
+</script>
+
+</body>
+</html>
