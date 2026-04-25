@@ -1,0 +1,22 @@
+Running procedure for this code
+
+Quiz-app/│
+         ├── backend/
+         │   └── questions.js 
+         │   └── server.js
+         ├── frontend/
+         │   └── quiz.html 
+         │   └── quiz.js
+         │   └── score.html 
+         │   └── score.js
+                
+Backend → Quiz → Question → Quiz → Score
+▶️ Run the Project
+1. Start Backend
+cd backend
+npm init -y
+npm install express cors
+node server.js
+2. Run Frontend
+Open index.html in browser
+✨ Optional Enhancements
