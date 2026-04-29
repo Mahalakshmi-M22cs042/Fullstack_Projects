@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Campus Drive Students</title>
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #36d1dc, #5b86e5);
+    margin: 0;
+}
+
+.container {
+    width: 70%;
+    margin: 40px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+h2 {
+    color: #444;
+}
+
+input {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    background: #5b86e5;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #3f6ed3;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th {
+    background: #5b86e5;
+    color: white;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+}
+
+/* CSS selectors */
+tr:nth-child(even) {
+    background: #f2f6ff;
+}
+
+tr:nth-child(odd) {
+    background: #ffffff;
+}
+
+tr:hover {
+    background: #dbe4ff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>🎓 Campus Drive Students</h2>
+
+    <input type="text" id="studentName" placeholder="Student Name">
+    <input type="text" id="companyName" placeholder="Company Name">
+    <br>
+
+    <button onclick="addStudent()">➕ Add</button>
+    <button onclick="loadStudents()">📥 Load More</button>
+
+    <table id="studentTable">
+        <tr>
+            <th>Name</th>
+            <th>Company</th>
+        </tr>
+        <tr>
+            <td>Alice</td>
+            <td>Infosys</td>
+        </tr>
+        <tr>
+            <td>Bob</td>
+            <td>TCS</td>
+        </tr>
+    </table>
+</div>
+
+<!-- Link external JS -->
+<script src="students.js"></script>
+
+<script>
+// Add student manually
+function addStudent() {
+    let name = document.getElementById("studentName").value.trim();
+    let company = document.getElementById("companyName").value.trim();
+
+    if (!name || !company) {
+        alert("Enter both fields!");
+        return;
+    }
+
+    let table = document.getElementById("studentTable");
+    let row = table.insertRow();
+
+    row.insertCell(0).innerText = name;
+    row.insertCell(1).innerText = company;
+
+    document.getElementById("studentName").value = "";
+    document.getElementById("companyName").value = "";
+}
+
+// Load from JS file
+function loadStudents() {
+    let table = document.getElementById("studentTable");
+
+    studentsData.forEach(student => {
+        let row = table.insertRow();
+        row.insertCell(0).innerText = student.name;
+        row.insertCell(1).innerText = student.company;
+    });
+}
+</script>
+
+</body>
+</html>

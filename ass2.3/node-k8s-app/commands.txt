@@ -1,0 +1,20 @@
+docker build -t node-k8s-app:latest .
+kubectl rollout restart deployment/campus-drive-app
+kubectl rollout restart deployment/node-k8s-app
+docker rmi node-k8s-app:latest --force
+cls
+docker build -t node-k8s-app:latest .
+kubectl apply -f k8s/mongo-secret.yaml
+kubectl apply -f k8s/mongo-deployment.yaml
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+kubectl apply -f k8s/hpa.yaml
+kubectl set image deployment/campus-drive-app nodejs-container=node-k8s-app:latest
+kubectl rollout restart deployment/campus-drive-app
+kubectl get deployments
+kubectl set image deployment/node-k8s-app nodejs-container=node-k8s-app:latest
+kubectl rollout restart deployment/node-k8s-app
+kubectl get pods
+kubectl port-forward service/nodejs-service 8080:80
+kubectl exec -it mongo-d4547f887-pps8j -- mongosh
+doskey /history > commands.txt

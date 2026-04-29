@@ -1,0 +1,19 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package.json package-lock.json* ./
+RUN npm install --omit=dev
+
+COPY . .
+
+# Create /app/public and move frontend files there
+# (server.js serves static files from /public)
+RUN mkdir -p public && \
+    mv index.html public/ 2>/dev/null || true && \
+    mv style.css public/ 2>/dev/null || true && \
+    mv script.js public/ 2>/dev/null || true
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]
